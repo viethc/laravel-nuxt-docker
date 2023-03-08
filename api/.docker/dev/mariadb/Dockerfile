@@ -1,0 +1,2 @@
+# Image
+FROM mariadb:latest

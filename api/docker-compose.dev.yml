@@ -52,19 +52,32 @@ services:
     networks:
       - api
 
-  postgres:
+  # postgres:
+  #   build:
+  #     dockerfile: .docker/dev/postgres/Dockerfile
+  #   environment:
+  #     POSTGRES_DB: ${DB_DATABASE}
+  #     POSTGRES_USER: ${DB_USERNAME}
+  #     POSTGRES_PASSWORD: ${DB_PASSWORD}
+  #   volumes:
+  #     - postgres:/var/lib/postgresql/data
+  #     - ./.docker/dev/postgres/dumps/:/tmp
+  #   ports:
+  #     - "5432:5432"
+  #   networks:
+  #     - api
+
+  mariadb:
     build:
-      dockerfile: .docker/dev/postgres/Dockerfile
+      dockerfile: .docker/dev/mariadb/Dockerfile
+    image: mariadb:latest
     environment:
-      POSTGRES_DB: ${DB_DATABASE}
-      POSTGRES_USER: ${DB_USERNAME}
-      POSTGRES_PASSWORD: ${DB_PASSWORD}
-    volumes:
-      - postgres:/var/lib/postgresql/data
-      - ./.docker/dev/postgres/dumps/:/tmp
-    ports:
-      - "5432:5432"
-    networks:
+      MYSQL_ROOT_PASSWORD: toor
+      MYSQL_DATABASE: laravel
+      TEST_DB_NAME: laravel_test
+      MYSQL_USER: laravel
+      MYSQL_PASSWORD: laravel
+    networks: 
       - api
 
   postgres-testing:
